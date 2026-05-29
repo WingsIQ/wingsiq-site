@@ -4,7 +4,10 @@
   "description": "WingsIQ landing page",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
   "repository": {
     "type": "git",
@@ -21,6 +24,14 @@
     "@anthropic-ai/sdk": "^0.100.1",
     "@supabase/supabase-js": "^2.106.2",
     "elevenlabs": "^1.59.0",
-    "openai": "^6.39.1"
+    "next": "^15.5.18",
+    "openai": "^6.39.1",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "typescript": "^6.0.3"
   }
 }

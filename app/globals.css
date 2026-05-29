@@ -1,0 +1,43 @@
+:root {
+  --navy: #060910;
+  --deep: #0b1120;
+  --card: #0f1829;
+  --accent: #3b7bf7;
+  --accent-bright: #5b9bff;
+  --glow: #93c5fd;
+  --white: #eef4ff;
+  --dim: #5b7ba8;
+  --dimmer: #3a4e6a;
+  --border: rgba(59, 123, 247, 0.15);
+  --border-bright: rgba(59, 123, 247, 0.35);
+  --danger: #f87171;
+  --success: #4ade80;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100%;
+  background: var(--navy);
+  color: var(--white);
+  font-family:
+    "Inter",
+    system-ui,
+    -apple-system,
+    sans-serif;
+  line-height: 1.5;
+}
+
+a {
+  color: var(--accent-bright);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
