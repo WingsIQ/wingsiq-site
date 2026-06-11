@@ -44,6 +44,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.45s both; margin-bottom: 64px; }
 .btn-primary { background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700; transition: all 0.2s; border: none; cursor: pointer; }
 .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,123,247,0.35); }
+.btn-primary.big { padding: 20px 44px; font-size: 18px; letter-spacing: 0.5px; line-height: 1.2; }
+.btn-takeoff { background: #FBBF24; color: #0B1120; text-align: center; max-width: 640px; animation: takeoffPulse 1.8s ease-in-out infinite; }
+.btn-takeoff:hover { background: #FCD34D; transform: translateY(-2px); box-shadow: 0 12px 44px rgba(251,191,36,0.5); animation: none; }
+@keyframes takeoffPulse { 0%,100% { box-shadow: 0 0 18px 0 rgba(251,191,36,0.25); opacity: 1; } 50% { box-shadow: 0 0 34px 6px rgba(251,191,36,0.6); opacity: 0.86; } }
 .btn-secondary { background: transparent; color: var(--glow); padding: 16px 36px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 600; transition: all 0.2s; border: 1px solid var(--border-bright); }
 .hero-stats { display: flex; gap: 48px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.6s both; }
 .stat-item { text-align: center; }
@@ -54,6 +58,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .section-title { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
 .section-sub { font-size: 17px; color: var(--dim); max-width: 520px; line-height: 1.7; margin-bottom: 56px; }
 .atc-window { background: var(--card); border: 1px solid var(--border-bright); border-radius: 20px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+.atc-cta-window { display: block; text-decoration: none; cursor: pointer; transition: all 0.3s ease; max-width: 820px; margin: 0 auto; }
+.atc-cta-window:hover { border-color: var(--accent-bright); transform: translateY(-4px); box-shadow: 0 50px 120px rgba(0,0,0,0.6); }
+.try-banner { background: var(--accent); color: #fff; font-family: var(--mono); font-weight: 500; letter-spacing: 1px; text-align: center; padding: 13px; font-size: 14px; }
+.atc-cta-window:hover .try-banner { background: var(--accent-bright); }
+.atc-screenshot { width: 100%; display: block; }
 .atc-titlebar { background: rgba(59,123,247,0.08); padding: 16px 24px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--border); }
 .atc-dots { display: flex; gap: 6px; }
 .atc-dot { width: 10px; height: 10px; border-radius: 50%; }
@@ -82,9 +91,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
 .feature-card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 32px; transition: all 0.3s ease; }
 .feature-card:hover { border-color: var(--border-bright); transform: translateY(-4px); }
+.feature-card-link { display: block; text-decoration: none; color: inherit; }
 .feature-icon { width: 48px; height: 48px; background: rgba(59,123,247,0.12); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 20px; border: 1px solid var(--border); }
+.feature-badge { display: inline-block; font-family: var(--mono); font-size: 10px; letter-spacing: 1px; text-transform: uppercase; padding: 3px 10px; border-radius: 6px; margin-bottom: 14px; }
+.feature-badge.soon { background: rgba(91,123,168,0.15); color: var(--dim); }
+.feature-badge.live { background: rgba(40,202,65,0.12); color: #28CA41; }
 .feature-name { font-size: 18px; font-weight: 700; margin-bottom: 10px; color: var(--white); }
 .feature-desc { font-size: 14px; color: var(--dim); line-height: 1.65; }
+.feature-link { display: inline-block; margin-top: 14px; color: var(--accent-bright); text-decoration: none; font-size: 14px; font-weight: 600; }
+.feature-link:hover { color: var(--glow); }
+.features-foot { text-align: center; margin-top: 40px; color: var(--dim); font-size: 15px; }
+.features-foot a { color: var(--accent-bright); text-decoration: none; font-weight: 600; }
+.features-foot a:hover { color: var(--glow); }
 .waitlist-section { padding: 100px 48px; text-align: center; position: relative; }
 .waitlist-box { max-width: 560px; margin: 0 auto; }
 .waitlist-count { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 24px; }
@@ -95,6 +113,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .waitlist-input::placeholder { color: var(--dimmer); }
 .waitlist-btn { background: var(--accent); color: #fff; border: none; padding: 16px 28px; font-family: var(--sans); font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap; }
 .waitlist-note { font-size: 13px; color: var(--dimmer); font-family: var(--mono); }
+.interest-note { display: none; font-family: var(--mono); font-size: 13px; color: var(--accent-bright); margin-bottom: 16px; }
 footer { border-top: 1px solid var(--border); padding: 48px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 24px; }
 .footer-logo { font-size: 18px; font-weight: 800; text-decoration: none; }
 .footer-logo .w { color: var(--white); }
@@ -109,13 +128,12 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
 </head>
 <body>
 <nav>
-  <a href="/" class="nav-logo"><span class="w">Wings</span><span class="iq">IQ</span></a>
+  <a href="https://app.wingsiq.ai/login" class="nav-logo"><span class="w">Wings</span><span class="iq">IQ</span></a>
   <ul class="nav-links">
     <li><a href="#features">Features</a></li>
-    <li><a href="#atc">ATC Simulator</a></li>
-    <li><a href="#waitlist">Join Waitlist</a></li>
+    <li><a href="https://app.wingsiq.ai/login">ATC Simulator</a></li>
+    <li><a href="#waitlist">Get Notified</a></li>
   </ul>
-  <a href="#waitlist" class="nav-cta">Get Early Access</a>
 </nav>
 <section class="hero">
   <div class="hero-eyebrow">AI Flight Training Platform</div>
@@ -125,8 +143,7 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
   </h1>
   <p class="hero-sub">The first flight training platform that actually talks back. Practice ATC radio calls with AI, ace your checkride, and track your WingsIQ score — 24/7, from anywhere.</p>
   <div class="hero-actions">
-    <a href="#waitlist" class="btn-primary">Join the Waitlist</a>
-    <a href="#atc" class="btn-secondary">See the ATC Simulator</a>
+    <a href="https://app.wingsiq.ai/login" class="btn-primary big btn-takeoff">CLEARED FOR TAKE OFF — TRY THE ATC SIMULATOR — START FREE TRIAL</a>
   </div>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num">359K</div><div class="stat-label">Student Pilots in the US</div></div>
@@ -136,56 +153,49 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
   </div>
 </section>
 <section class="atc-section" id="atc">
-  <div class="section-label">// ATC Voice Simulator</div>
+  <div class="section-label">// ATC Voice Simulator — Live Now</div>
   <h2 class="section-title">Talk to the Tower.<br>Right now.</h2>
   <p class="section-sub">WingsIQ puts a real AI controller in your headset. Practice any airport, any time. Get instant feedback on every readback.</p>
-  <div class="atc-window">
-    <div class="atc-titlebar">
-      <div class="atc-dots"><div class="atc-dot"></div><div class="atc-dot"></div><div class="atc-dot"></div></div>
-      <span class="atc-title-text">WingsIQ ATC Simulator — KLAX Ground Control</span>
-      <div class="atc-live">LIVE SESSION</div>
-    </div>
-    <div class="atc-body">
-      <div class="atc-freq">KLAX Ground · 121.750 MHz · VFR · Clear · Wind 250@12</div>
-      <div class="atc-msg tower"><div class="atc-msg-from">🗼 KLAX Ground</div><div class="atc-msg-text">"Cessna N12345, KLAX Ground, good morning. Runway 24L, taxi via Alpha, Bravo. Hold short of Romeo. Altimeter 29.92."</div></div>
-      <div class="atc-msg pilot"><div class="atc-msg-from">✈ Student Pilot — You</div><div class="atc-msg-text">"Runway 24L, taxi via Alpha, Bravo, hold short Romeo, Cessna N12345. Altimeter 29.92."</div></div>
-      <div class="atc-msg feedback"><div class="atc-msg-from">🧠 WingsIQ AI — Instant Feedback</div><div class="atc-msg-text">✓ <strong>Perfect readback.</strong> All critical elements correct. WingsIQ Score: <strong>+12 pts → 847</strong></div></div>
-      <div class="atc-score"><div class="score-badge">WingsIQ Score: 847</div><div class="score-text">Top 8% of all students at KLAX · Keep going</div></div>
-    </div>
-  </div>
+  <a href="https://app.wingsiq.ai/login" class="atc-window atc-cta-window">
+    <div class="try-banner">▶ TRY IT FREE TODAY — no credit card, no download</div>
+    <img class="atc-screenshot" src="simulator.png" alt="WingsIQ live ATC simulator — IFR clearance at KPHX">
+  </a>
 </section>
 <section class="features-section" id="features">
   <div class="section-label">// Everything You Need</div>
   <h2 class="section-title">Train smarter.<br>Fly faster.</h2>
   <p class="section-sub" style="margin-bottom:56px">Four AI-powered tools that cover everything from first ground lesson to checkride day.</p>
   <div class="features-grid">
-    <div class="feature-card"><div class="feature-icon">🎙</div><div class="feature-name">ATC Voice Simulator</div><div class="feature-desc">Talk to a live AI controller at any of 19,000+ airports. Real phraseology, real pressure, real feedback.</div></div>
-    <div class="feature-card"><div class="feature-icon">🧠</div><div class="feature-name">Adaptive Ground School</div><div class="feature-desc">Lessons that adapt to what you got wrong. No more passive video watching.</div></div>
-    <div class="feature-card"><div class="feature-icon">📝</div><div class="feature-name">FAA Written Test Prep</div><div class="feature-desc">2,000+ questions with AI explanations for every wrong answer. Students average 93%+.</div></div>
-    <div class="feature-card"><div class="feature-icon">👨‍✈️</div><div class="feature-name">Live Checkride Simulator</div><div class="feature-desc">Claude plays a tough DPE. Students who do 10 mock orals arrive at their checkride completely calm.</div></div>
-    <div class="feature-card"><div class="feature-icon">🌤</div><div class="feature-name">Weather Decoder</div><div class="feature-desc">Paste any METAR or TAF. AI decodes it in plain English and quizzes you before you fly.</div></div>
-    <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-name">Your WingsIQ Score</div><div class="feature-desc">One score tracking mastery across all domains. Share with your CFI or post your progress.</div></div>
+    <a href="https://app.wingsiq.ai/login" class="feature-card feature-card-link"><div class="feature-icon">🎙</div><span class="feature-badge live">Live now</span><div class="feature-name">ATC Voice Simulator</div><div class="feature-desc">Talk to a live AI controller at any of 19,000+ airports. Real phraseology, real pressure, real feedback.</div><span class="feature-link">Try it free →</span></a>
+    <a href="#waitlist" class="feature-card feature-card-link" onclick="setInterest('Adaptive Ground School')"><div class="feature-icon">🧠</div><span class="feature-badge soon">Coming soon</span><div class="feature-name">Adaptive Ground School</div><div class="feature-desc">Lessons that adapt to what you got wrong. No more passive video watching.</div><span class="feature-link">Notify me →</span></a>
+    <a href="#waitlist" class="feature-card feature-card-link" onclick="setInterest('FAA Written Test Prep')"><div class="feature-icon">📝</div><span class="feature-badge soon">Coming soon</span><div class="feature-name">FAA Written Test Prep</div><div class="feature-desc">2,000+ questions with AI explanations for every wrong answer. Students average 93%+.</div><span class="feature-link">Notify me →</span></a>
+    <a href="#waitlist" class="feature-card feature-card-link" onclick="setInterest('Live Checkride Simulator')"><div class="feature-icon">👨‍✈️</div><span class="feature-badge soon">Coming soon</span><div class="feature-name">Live Checkride Simulator</div><div class="feature-desc">Claude plays a tough DPE. Students who do 10 mock orals arrive at their checkride completely calm.</div><span class="feature-link">Notify me →</span></a>
+    <a href="#waitlist" class="feature-card feature-card-link" onclick="setInterest('Weather Decoder')"><div class="feature-icon">🌤</div><span class="feature-badge soon">Coming soon</span><div class="feature-name">Weather Decoder</div><div class="feature-desc">Paste any METAR or TAF. AI decodes it in plain English and quizzes you before you fly.</div><span class="feature-link">Notify me →</span></a>
+    <a href="#waitlist" class="feature-card feature-card-link" onclick="setInterest('Your WingsIQ Score')"><div class="feature-icon">📊</div><span class="feature-badge soon">Coming soon</span><div class="feature-name">Your WingsIQ Score</div><div class="feature-desc">One score tracking mastery across all domains. Share with your CFI or post your progress.</div><span class="feature-link">Notify me →</span></a>
   </div>
+  <p class="features-foot">More tools landing soon — <a href="#waitlist">get notified the moment each one ships →</a></p>
 </section>
 <section class="waitlist-section" id="waitlist">
   <div class="waitlist-box">
-    <div class="waitlist-count">// Early Access Open</div>
-    <h2 class="waitlist-title">Your clearance<br>is waiting.</h2>
-    <p class="waitlist-sub">Be first in line when WingsIQ launches. Early access members get locked-in founding pricing — forever.</p>
-    <form class="waitlist-form" onsubmit="handleSubmit(event)">
-      <input type="email" class="waitlist-input" placeholder="your@email.com" id="email-input" required>
-      <button type="submit" class="waitlist-btn">Get Clearance →</button>
+    <div class="waitlist-count">// The Rest Is Inbound</div>
+    <h2 class="waitlist-title">Be first when<br>the rest lands.</h2>
+    <p class="waitlist-sub">The ATC simulator is live and free to try right now. Ground school, written-test prep, and the checkride simulator are next — drop your email and we'll tell you the moment each one ships. Early members lock in founding pricing.</p>
+    <div class="interest-note" id="interest-note"></div>
+    <form class="waitlist-form" id="notify-form" action="https://formspree.io/f/xvznwobv" method="POST" onsubmit="handleSubmit(event)">
+      <input type="hidden" name="interested_in" id="interest-field" value="Launch updates">
+      <input type="email" name="email" class="waitlist-input" placeholder="your@email.com" id="email-input" required>
+      <button type="submit" class="waitlist-btn">Notify Me →</button>
     </form>
-    <div class="waitlist-note">No spam. No credit card. Just early access.</div>
+    <div class="waitlist-note">No spam. No credit card. Just launch updates.</div>
     <div class="success-msg" id="success-msg">✓ You're on the list. We'll be in touch before launch. 🛫</div>
   </div>
 </section>
 <footer>
-  <a href="/" class="footer-logo"><span class="w">Wings</span><span class="iq">IQ</span></a>
+  <a href="https://app.wingsiq.ai/login" class="footer-logo"><span class="w">Wings</span><span class="iq">IQ</span></a>
   <ul class="footer-links">
     <li><a href="#features">Features</a></li>
-    <li><a href="#atc">ATC Simulator</a></li>
-    <li><a href="#waitlist">Early Access</a></li>
+    <li><a href="https://app.wingsiq.ai/login">ATC Simulator</a></li>
+    <li><a href="#waitlist">Get Notified</a></li>
     <li><a href="/terms">Terms of Service</a></li>
     <li><a href="/privacy">Privacy Policy</a></li>
     <li><a href="mailto:hello@wingsiq.ai">Contact</a></li>
@@ -193,10 +203,29 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
   <div class="footer-copy">© 2026 Cobalt Oasis LLC · DBA WingsIQ</div>
 </footer>
 <script>
-function handleSubmit(e) {
+function setInterest(feature) {
+  document.getElementById('interest-field').value = feature;
+  const note = document.getElementById('interest-note');
+  if (note) { note.textContent = '↓ We\'ll notify you the moment ' + feature + ' ships:'; note.style.display = 'block'; }
+}
+async function handleSubmit(e) {
   e.preventDefault();
-  document.querySelector('.waitlist-form').style.display = 'none';
-  document.getElementById('success-msg').style.display = 'block';
+  const form = document.getElementById('notify-form');
+  try {
+    const res = await fetch(form.action, {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+    if (res.ok) {
+      form.style.display = 'none';
+      document.getElementById('success-msg').style.display = 'block';
+    } else {
+      alert('Something went wrong — please try again in a moment.');
+    }
+  } catch (err) {
+    alert('Network error — please try again in a moment.');
+  }
 }
 </script>
 </body>
