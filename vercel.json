@@ -1,6 +1,9 @@
 {
   "rewrites": [
     { "source": "/terms", "destination": "/terms.html" },
-    { "source": "/privacy", "destination": "/privacy.html" }
+    { "source": "/privacy", "destination": "/privacy.html" },
+    { "source": "/score", "destination": "/wingsiq-score.html" },
+    { "source": "/card", "destination": "/wingsiq-score-card.html" },
+    { "source": "/preview", "destination": "/preview.html" }
   ]
 }

@@ -3,62 +3,137 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Terms of Service — WingsIQ</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;700;800&family=DM+Mono:wght@400&display=swap" rel="stylesheet">
+<title>WingsIQ — Terms of Service</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root { --navy:#060910; --accent:#3B7BF7; --white:#EEF4FF; --dim:#5B7BA8; --border:rgba(59,123,247,0.15); }
-* { box-sizing:border-box; margin:0; padding:0; }
-body { background:var(--navy); color:var(--white); font-family:'Syne',sans-serif; line-height:1.7; }
-nav { padding:20px 48px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid var(--border); }
-.logo { font-size:20px; font-weight:800; text-decoration:none; }
-.logo .w{color:var(--white);} .logo .iq{color:var(--accent);}
-.back { color:var(--dim); text-decoration:none; font-size:14px; }
-.back:hover{color:var(--white);}
-.container { max-width:760px; margin:0 auto; padding:80px 48px; }
-h1 { font-size:40px; font-weight:800; letter-spacing:-1px; margin-bottom:8px; }
-.updated { font-family:'DM Mono',monospace; font-size:12px; color:var(--dim); margin-bottom:56px; }
-h2 { font-size:20px; font-weight:700; margin:40px 0 12px; }
-p { color:var(--dim); margin-bottom:16px; font-size:15px; }
-ul { color:var(--dim); padding-left:24px; margin-bottom:16px; font-size:15px; }
-li { margin-bottom:8px; }
-a { color:var(--accent); }
-footer { text-align:center; padding:48px; border-top:1px solid var(--border); font-size:13px; color:var(--dim); font-family:'DM Mono',monospace; }
+  :root{--panel:#0A0E14;--bg2:#05080c;--amber:#FBBF24;--ink:#E8EDF2;--muted:#8C95A1;--line:#1f2733;--card:#0e131a}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(120% 70% at 50% -10%, #11161f 0%, var(--panel) 55%, var(--bg2) 100%);
+    color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;line-height:1.65}
+  a{color:var(--amber);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .nav{display:flex;align-items:center;justify-content:space-between;padding:20px clamp(18px,5vw,48px);
+    border-bottom:1px solid var(--line);position:sticky;top:0;background:rgba(10,14,20,.85);backdrop-filter:blur(8px);z-index:5}
+  .brand{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;letter-spacing:.04em;font-size:20px;text-transform:uppercase}
+  .brand b{color:var(--amber)}
+  .wrap{max-width:820px;margin:0 auto;padding:clamp(36px,6vw,72px) clamp(18px,5vw,28px) 90px}
+  .eyebrow{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.26em;text-transform:uppercase;font-size:12px;color:var(--amber)}
+  h1{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:clamp(34px,6vw,52px);line-height:1.04;margin:12px 0 8px}
+  .meta{color:var(--muted);font-size:14px;margin-bottom:28px}
+  .brief{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--amber);
+    border-radius:14px;padding:22px 24px;margin:0 0 36px}
+  .brief h2{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:22px;margin-bottom:6px}
+  .brief .note{color:var(--muted);font-size:13px;margin-bottom:12px}
+  .brief p{font-size:15.5px}
+  .brief strong{color:#fff}
+  h3{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:21px;margin:34px 0 10px;
+    padding-top:18px;border-top:1px solid var(--line)}
+  p{margin:0 0 12px;color:#D6DCE4}
+  ul{margin:0 0 12px 22px}
+  li{margin-bottom:7px;color:#D6DCE4}
+  .legal p, .legal li{font-size:13.5px;color:var(--muted);text-transform:none}
+  strong{color:#F1F4F8}
+  .foot{border-top:1px solid var(--line);padding:26px clamp(18px,5vw,48px);color:var(--muted);font-size:13px;text-align:center}
 </style>
 </head>
 <body>
-<nav>
-  <a href="/" class="logo"><span class="w">Wings</span><span class="iq">IQ</span></a>
-  <a href="/" class="back">← Back to WingsIQ</a>
-</nav>
-<div class="container">
-  <h1>Terms of Service</h1>
-  <div class="updated">Last updated: May 26, 2026</div>
-  <h2>1. Acceptance of Terms</h2>
-  <p>By accessing or using WingsIQ ("the Service"), operated by Cobalt Oasis LLC ("Company"), you agree to be bound by these Terms of Service.</p>
-  <h2>2. Description of Service</h2>
-  <p>WingsIQ is an AI-powered flight training platform providing voice ATC simulation, adaptive ground school, FAA written test preparation, and oral checkride simulation at wingsiq.ai.</p>
-  <h2>3. Educational Disclaimer</h2>
-  <p>WingsIQ is an educational tool only and is NOT a substitute for certified flight instruction. Always work with a certified flight instructor (CFI) for actual flight training.</p>
-  <h2>4. Eligibility</h2>
-  <p>You must be at least 13 years of age to use WingsIQ.</p>
-  <h2>5. Subscription and Payments</h2>
-  <ul>
-    <li>WingsIQ offers subscription plans billed monthly or annually</li>
-    <li>Payments are processed securely through Stripe</li>
-    <li>Subscriptions automatically renew unless cancelled before the renewal date</li>
-    <li>Refunds are available within 7 days of initial purchase for new subscribers</li>
-  </ul>
-  <h2>6. Acceptable Use</h2>
-  <p>You agree not to misuse the Service, attempt unauthorized access, reproduce content without permission, or use automated tools to scrape the Service.</p>
-  <h2>7. Intellectual Property</h2>
-  <p>All content and functionality of WingsIQ are owned by Cobalt Oasis LLC and protected by intellectual property laws.</p>
-  <h2>8. Limitation of Liability</h2>
-  <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, COBALT OASIS LLC SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, OR CONSEQUENTIAL DAMAGES ARISING FROM YOUR USE OF THE SERVICE.</p>
-  <h2>9. Changes to Terms</h2>
-  <p>We reserve the right to modify these terms at any time with notice to users via email or prominent notice on the Service.</p>
-  <h2>10. Contact</h2>
-  <p>Questions? Contact us at <a href="mailto:hello@wingsiq.ai">hello@wingsiq.ai</a><br>Cobalt Oasis LLC · Arizona, United States</p>
-</div>
-<footer>© 2026 Cobalt Oasis LLC · DBA WingsIQ · hello@wingsiq.ai</footer>
+  <div class="nav">
+    <a class="brand" href="index.html">Wings<b>IQ</b></a>
+    <a href="index.html">&larr; Back to site</a>
+  </div>
+
+  <div class="wrap">
+    <div class="eyebrow">Legal</div>
+    <h1>Terms of Service</h1>
+    <div class="meta">Operated by Cobalt Oasis LLC ("WingsIQ," "we," "us," "our") &middot; Last updated: June 14, 2026 &middot; Effective: June 14, 2026</div>
+
+    <div class="brief">
+      <h2>&#9992;&#65039; Preflight Briefing</h2>
+      <div class="note">Plain-English summary &mdash; for convenience only, not part of the binding agreement below.</div>
+      <p>Treat WingsIQ like a flight simulator and a study buddy &mdash; <strong>not</strong> a flight instructor, not an examiner, and definitely not air traffic control. We help you <em>practice</em> and <em>learn</em>. We do not certify you, we do not guarantee you'll pass anything, and you must never use WingsIQ for real-world flight, navigation, or go/no-go decisions. The FAA, your CFI, and current official publications are always the final authority. <strong>You are Pilot in Command of your own decisions.</strong> If that's not acceptable, do not use the service. By using WingsIQ, you agree to everything below. Read it before you taxi.</p>
+    </div>
+
+    <h3>1. Acceptance &amp; Eligibility</h3>
+    <p>By accessing or using WingsIQ (the website, app, ATC simulator, Digital Pilot Examiner, test prep, ground school, weather decoder, WingsIQ Score, and any related service &mdash; collectively, the "Service"), you agree to be bound by these Terms. You must be at least 18 years old (or the age of majority in your jurisdiction). If you use the Service on behalf of an organization, you represent that you are authorized to bind it.</p>
+
+    <h3>2. Training &amp; Educational Use ONLY</h3>
+    <p>The Service is a <strong>training, study, and entertainment aid</strong>. It is <strong>NOT</strong>:</p>
+    <ul>
+      <li>a substitute for instruction by a certificated flight instructor (CFI);</li>
+      <li>a substitute for FAA-approved ground school, courseware, or official FAA knowledge or practical testing;</li>
+      <li>an FAA-authorized testing center or endorsement provider;</li>
+      <li>a source for real-world flight planning, navigation, weather briefing, or in-flight decision-making.</li>
+    </ul>
+    <p>You agree <strong>not</strong> to rely on any WingsIQ output (including ATC phraseology, weather decoding, scores, lesson content, or examiner feedback) for the actual operation of an aircraft.</p>
+
+    <h3>3. The "Digital Pilot Examiner" &mdash; What It Is and Isn't</h3>
+    <p>WingsIQ's <strong>Digital Pilot Examiner ("DPE")</strong> is an artificial-intelligence practice and simulation feature. It is named to evoke, but is wholly distinct from, the FAA's <strong>Designated Pilot Examiner</strong>. The WingsIQ Digital Pilot Examiner:</p>
+    <ul>
+      <li>is a software simulation for rehearsal and study;</li>
+      <li>does <strong>NOT</strong> issue, endorse, recommend, or substitute for any FAA certificate, rating, endorsement, logbook entry, or checkride;</li>
+      <li>does <strong>NOT</strong> create any airman certification or privilege of any kind;</li>
+      <li>may produce incomplete, inaccurate, or outdated output.</li>
+    </ul>
+    <p>Only an FAA Designated Pilot Examiner can administer an official practical test.</p>
+
+    <h3>4. The Pilot Is the Final Authority; Defer to Current Regulations</h3>
+    <p>Aviation regulations, procedures, charts, and standards change frequently (including 14 CFR, the AIM, the ACS, NOTAMs, and airport data). <strong>The authoritative source is always the FAA and current official publications &mdash; never WingsIQ.</strong> Content within the Service may be outdated, simplified, incomplete, or wrong. Consistent with the principle that the pilot in command is directly responsible for, and is the final authority as to, the operation of the aircraft, <strong>you bear sole responsibility for verifying all information against current official sources</strong> and for all decisions you make.</p>
+
+    <h3>5. No Warranties &mdash; Provided "As Is"</h3>
+    <p>THE SERVICE IS PROVIDED "AS IS" AND "AS AVAILABLE," WITH ALL FAULTS AND WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, ACCURACY, AND NON-INFRINGEMENT. <strong>We do not warrant or guarantee that you will pass any FAA knowledge test, oral exam, checkride, or any other test, or that you will become a safe, competent, or certificated pilot.</strong> We do not warrant that the Service will be uninterrupted, error-free, or secure.</p>
+
+    <h3>6. Assumption of Risk</h3>
+    <p>Aviation is inherently dangerous and can result in serious injury or death. You knowingly and voluntarily <strong>assume all risks</strong> associated with your aviation training and operations, and with your use of the Service.</p>
+
+    <h3>7. Limitation of Liability</h3>
+    <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, COBALT OASIS LLC, ITS OWNERS, MEMBERS, OFFICERS, EMPLOYEES, CONTRACTORS, AND SUPPLIERS WILL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, EXEMPLARY, OR PUNITIVE DAMAGES, OR FOR ANY LOSS OF PROFITS, DATA, GOODWILL, <strong>OR FOR ANY PERSONAL INJURY, DEATH, PROPERTY DAMAGE, AVIATION INCIDENT OR ACCIDENT, FAILED EXAM OR CHECKRIDE, OR LOST OR DENIED CERTIFICATE OR RATING,</strong> arising out of or relating to your use of (or inability to use) the Service, whether based in contract, tort, negligence, strict liability, or otherwise, even if advised of the possibility of such damages.</p>
+    <p>OUR TOTAL AGGREGATE LIABILITY FOR ALL CLAIMS RELATING TO THE SERVICE WILL NOT EXCEED THE GREATER OF (a) THE AMOUNT YOU PAID US IN THE 12 MONTHS BEFORE THE CLAIM, OR (b) ONE HUNDRED U.S. DOLLARS ($100).</p>
+    <p class="legal"><em>Some jurisdictions do not allow certain exclusions; in those jurisdictions, liability is limited to the smallest extent permitted by law.</em></p>
+
+    <h3>8. Indemnification</h3>
+    <p>You agree to <strong>defend, indemnify, and hold harmless</strong> Cobalt Oasis LLC and its owners, members, officers, employees, and contractors from and against any and all claims, damages, losses, liabilities, costs, and expenses (including reasonable attorneys' fees) arising out of or related to: (a) your use or misuse of the Service; (b) your violation of these Terms; (c) your violation of any law or the rights of any third party; or (d) any aviation activity or decision you undertake.</p>
+
+    <h3>9. Binding Arbitration; Class-Action &amp; Jury Waiver</h3>
+    <p><strong>PLEASE READ &mdash; THIS AFFECTS YOUR LEGAL RIGHTS.</strong> Any dispute arising out of or relating to these Terms or the Service will be resolved exclusively by <strong>final and binding individual arbitration</strong> administered by the American Arbitration Association under its Consumer Arbitration Rules, rather than in court, except that either party may bring qualifying claims in small-claims court.</p>
+    <ul>
+      <li><strong>You and WingsIQ waive any right to a jury trial.</strong></li>
+      <li><strong>You and WingsIQ waive any right to participate in a class, collective, or representative action.</strong> Disputes must be brought individually.</li>
+      <li>Arbitration will take place in Maricopa County, Arizona, and these Terms are governed by the laws of the State of Arizona, without regard to conflict-of-laws rules.</li>
+    </ul>
+
+    <h3>10. Acceptable Use</h3>
+    <p>You agree not to: misuse, scrape, reverse-engineer, or disrupt the Service; resell or redistribute content without permission; misrepresent WingsIQ as an FAA-authorized provider; or use the Service for any unlawful purpose.</p>
+
+    <h3>11. Subscriptions, Payment &amp; Cancellation</h3>
+    <p>WingsIQ offers a paid subscription billed at <strong>$24.00 USD per month</strong> (plus any applicable taxes) through our third-party payment processor, <strong>Stripe</strong>. By starting a paid subscription, you authorize us, through Stripe, to charge your designated payment method on a recurring monthly basis, and you represent that you are authorized to use that payment method.</p>
+    <ul>
+      <li><strong>Auto-renewal.</strong> Your subscription renews automatically at the end of each monthly billing period at the then-current price, and we (through Stripe) will charge your payment method on each renewal date, until you cancel.</li>
+      <li><strong>Cancellation.</strong> You may cancel at any time from your account settings or by emailing hello@wingsiq.ai. When you cancel, your subscription remains active through the end of the current paid billing period and will not renew for the next period; access ends when that period expires.</li>
+      <li><strong>Refunds.</strong> Except where required by law, all payments are non-refundable, and we do not provide refunds or credits for partial billing periods, downgrades, or unused time.</li>
+      <li><strong>Price changes.</strong> We may change subscription pricing or plan features. We will provide advance notice, and changes take effect on your next billing period. Continuing your subscription after a change takes effect constitutes acceptance of the new price.</li>
+      <li><strong>Failed payments.</strong> If a charge is declined or fails, we may suspend or terminate your access until the amount owed is resolved.</li>
+      <li><strong>Processor terms.</strong> Payments are processed by Stripe and are also subject to Stripe's own terms of service and privacy policy. We do not store full payment-card details.</li>
+    </ul>
+
+    <h3>12. Intellectual Property</h3>
+    <p>All content, software, branding, and the "WingsIQ" and "Digital Pilot Examiner" names and marks are owned by Cobalt Oasis LLC. We grant you a limited, revocable, non-transferable license to use the Service for personal training purposes only.</p>
+
+    <h3>13. Changes to the Service and Terms</h3>
+    <p>We may modify or discontinue any part of the Service, and may update these Terms, at any time. Material changes will be posted with a new "Last updated" date. Your continued use after changes constitutes acceptance.</p>
+
+    <h3>14. Termination</h3>
+    <p>We may suspend or terminate your access at any time, with or without cause. Sections 2&ndash;9, 12, and 15 survive termination.</p>
+
+    <h3>15. General</h3>
+    <p>These Terms are the entire agreement between you and us regarding the Service. If any provision is held unenforceable, the rest remains in effect (severability), and the unenforceable provision will be limited to the minimum extent necessary. Our failure to enforce any right is not a waiver. You may not assign these Terms; we may.</p>
+
+    <h3>16. Contact</h3>
+    <p>Cobalt Oasis LLC &mdash; 1637 E. Wagoner Road, Phoenix, AZ 85022 &mdash; <a href="mailto:hello@wingsiq.ai">hello@wingsiq.ai</a></p>
+  </div>
+
+  <div class="foot">&copy; <span id="yr"></span> Cobalt Oasis LLC &middot; WingsIQ is a training aid, not a substitute for a CFI, FAA testing, or actual flight.</div>
+  <script>document.getElementById('yr').textContent=new Date().getFullYear();</script>
 </body>
 </html>

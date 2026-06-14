@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WingsIQ — Shareable Score Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{--panel:#0A0E14;--bg2:#05080c;--amber:#FBBF24;--ink:#E8EDF2;--muted:#79828F;--line:#222b38;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:radial-gradient(130% 90% at 50% -20%, #11161f 0%, var(--panel) 55%, var(--bg2) 100%);
+    color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;
+    min-height:100vh;padding:clamp(20px,4vw,48px);display:flex;flex-direction:column;align-items:center;gap:26px;}
+  .eyebrow{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.26em;
+    text-transform:uppercase;font-size:12px;color:var(--amber)}
+  h1{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:clamp(24px,4vw,34px);text-align:center}
+  .layout{display:flex;gap:clamp(22px,4vw,46px);flex-wrap:wrap;justify-content:center;align-items:flex-start;width:100%;max-width:840px}
+  .preview{flex:0 0 auto}
+  canvas{display:block;border-radius:18px;box-shadow:0 24px 60px rgba(0,0,0,.6);width:340px;height:auto;max-width:78vw}
+  canvas.story{width:260px}
+  .controls{flex:1 1 280px;min-width:260px;max-width:360px;display:flex;flex-direction:column;gap:20px}
+  .group label{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.08em;
+    text-transform:uppercase;font-size:12px;color:var(--muted);display:block;margin-bottom:10px}
+  .scoreRow{display:flex;align-items:baseline;gap:8px;margin-bottom:6px}
+  .scoreRow b{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:34px;color:var(--amber)}
+  .scoreRow span{color:var(--muted);font-size:14px}
+  .scoreRow em{margin-left:auto;font-style:normal;font-family:'Saira Semi Condensed',sans-serif;font-weight:600;color:var(--ink);font-size:16px}
+  input[type=range]{width:100%;accent-color:var(--amber);height:26px}
+  .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;gap:2px}
+  .seg button{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+    font-size:12px;color:var(--muted);background:transparent;border:none;border-radius:999px;padding:7px 18px;cursor:pointer;transition:background .15s,color .15s}
+  .seg button.on{background:var(--amber);color:var(--panel)}
+  .sel{width:100%;background:rgba(13,17,23,.7);color:var(--ink);border:1px solid var(--line);
+    border-radius:10px;padding:11px 12px;font-family:'Inter',sans-serif;font-size:14px;cursor:pointer}
+  .btn{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.05em;font-size:14px;
+    border-radius:11px;padding:13px 16px;cursor:pointer;border:none;transition:transform .12s,box-shadow .15s,background .15s}
+  .btn.primary{background:var(--amber);color:var(--panel);box-shadow:0 6px 18px rgba(251,191,36,.25)}
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(251,191,36,.35)}
+  .btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+  .btn.ghost:hover{border-color:var(--amber);color:var(--amber)}
+  .caption{background:rgba(13,17,23,.6);border:1px solid var(--line);border-radius:11px;padding:13px 14px;font-size:13.5px;color:var(--muted);line-height:1.5}
+  .caption b{color:var(--ink);font-weight:600}
+  .hint{font-size:12px;color:var(--muted);min-height:15px}
+</style>
+</head>
+<body>
+  <div class="eyebrow">WingsIQ &middot; Share</div>
+  <h1>Your Score Card</h1>
+  <div class="layout">
+    <div class="preview"><canvas id="card" width="1080" height="1080"></canvas></div>
+    <div class="controls">
+      <div class="group">
+        <div class="scoreRow"><b id="sVal">78</b><span>/100</span><em id="sTier">Cross-Country</em></div>
+        <input type="range" id="score" min="0" max="100" value="78">
+        <label style="margin-top:14px">Format</label>
+        <div class="seg" id="fmt">
+          <button class="on" data-f="square">Square</button>
+          <button data-f="story">Story</button>
+        </div>
+        <label style="margin-top:16px">Milestone</label>
+        <select id="milestone" class="sel">
+          <option value="none">No milestone &mdash; just my score</option>
+          <option value="solo">First Solo</option>
+          <option value="ppl">Private Written Passed</option>
+          <option value="ifr">Instrument Written Passed</option>
+          <option value="com">Commercial Written Passed</option>
+          <option value="atp">ATP Written Passed</option>
+          <option value="ready">Checkride Ready</option>
+          <option value="readbacks">100 Readbacks Logged</option>
+          <option value="streak">30-Day Streak</option>
+        </select>
+      </div>
+      <button class="btn primary" id="dl">Download PNG</button>
+      <button class="btn ghost" id="cap">Copy caption</button>
+      <div class="hint" id="hint"></div>
+      <div class="caption" id="capText"></div>
+    </div>
+  </div>
+<script>
+const TIERS=[{min:0,name:"Pre-Solo"},{min:50,name:"Solo Ready"},{min:65,name:"Cross-Country"},
+  {min:75,name:"Instrument Track"},{min:85,name:"Checkride Ready"},{min:93,name:"Captain"}];
+const tierFor=s=>{let t=TIERS[0];for(const x of TIERS)if(s>=x.min)t=x;return t.name;};
+const MS={none:'',solo:'First Solo',ppl:'Private Written Passed',ifr:'Instrument Written Passed',
+  com:'Commercial Written Passed',atp:'ATP Written Passed',ready:'Checkride Ready',
+  readbacks:'100 Readbacks Logged',streak:'30-Day Streak'};
+
+const canvas=document.getElementById('card'), ctx=canvas.getContext('2d');
+let state={score:78, fmt:'square', milestone:'none'};
+const D=Math.PI/180;
+
+function captionText(){
+  const s=state.score, ml=MS[state.milestone];
+  return ml
+    ? `Just hit a milestone \u2014 ${ml}. My WingsIQ is ${s}/100 (${tierFor(s)}). What's yours? wingsiq.ai #WingsIQ`
+    : `My WingsIQ is ${s}/100 \u2014 ${tierFor(s)}. Climbing one readback at a time. What's yours? wingsiq.ai #WingsIQ`;
+}
+function goldGrad(x0,y0,x1,y1){
+  const g=ctx.createLinearGradient(x0,y0,x1,y1);
+  g.addColorStop(0,'#FCEFB0');g.addColorStop(.26,'#E3B73E');g.addColorStop(.5,'#F6DB7B');
+  g.addColorStop(.74,'#C99A24');g.addColorStop(1,'#8A6312');return g;
+}
+function roundRect(x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.arcTo(x+w,y,x+w,y+h,r);
+  ctx.arcTo(x+w,y+h,x,y+h,r);ctx.arcTo(x,y+h,x,y,r);ctx.arcTo(x,y,x+w,y,r);ctx.closePath();}
+
+function drawEmblem(cx,cy,R,s,frac){
+  const start=135*D, sweep=270*D;
+  ctx.lineCap='round';
+  ctx.strokeStyle=goldGrad(cx-R,cy-R,cx+R,cy+R);
+  ctx.lineWidth=6;ctx.beginPath();ctx.arc(cx,cy,R+26,0,2*Math.PI);ctx.stroke();
+  ctx.lineWidth=5;ctx.beginPath();ctx.arc(cx,cy,R-26,0,2*Math.PI);ctx.stroke();
+  for(let i=0;i<=10;i++){
+    const a=start+(i/10)*sweep,major=i%5===0,r0=R+15,r1=R+(major?33:25);
+    ctx.strokeStyle='rgba(255,255,255,.5)';ctx.lineWidth=major?4:2;
+    ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r0,cy+Math.sin(a)*r0);ctx.lineTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);ctx.stroke();
+  }
+  ctx.lineWidth=34;ctx.strokeStyle='rgba(255,255,255,.08)';
+  ctx.beginPath();ctx.arc(cx,cy,R,start,start+sweep);ctx.stroke();
+  const col=s>=85?'#34D399':s>=65?'#FBBF24':'#E0922C';
+  const pg=ctx.createLinearGradient(cx-R,cy,cx+R,cy);pg.addColorStop(0,'#B45309');pg.addColorStop(1,col);
+  ctx.strokeStyle=pg;ctx.beginPath();ctx.arc(cx,cy,R,start,start+sweep*frac);ctx.stroke();
+  const ea=start+sweep*frac;ctx.fillStyle=col;
+  ctx.beginPath();ctx.arc(cx+Math.cos(ea)*R,cy+Math.sin(ea)*R,12,0,2*Math.PI);ctx.fill();
+  ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.fillStyle='#FBBF24';ctx.font="600 "+Math.round(R*0.105)+"px 'Saira Semi Condensed'";
+  ctx.fillText("WINGSIQ SCORE",cx,cy-R*0.46);
+  ctx.fillStyle='#FFFFFF';ctx.font="700 "+Math.round(R*0.92)+"px 'Saira Semi Condensed'";
+  ctx.fillText(String(s),cx,cy+R*0.04);
+  ctx.fillStyle='#79828F';ctx.font="600 "+Math.round(R*0.14)+"px 'Saira Semi Condensed'";
+  ctx.fillText("/ 100",cx,cy+R*0.42);
+}
+
+function render(){
+  const W=1080, H=state.fmt==='story'?1920:1080;
+  canvas.width=W;canvas.height=H;
+  canvas.className=state.fmt==='story'?'story':'';
+  const cx=W/2, s=state.score, frac=s/100, hasM=!!MS[state.milestone];
+
+  const bg=ctx.createRadialGradient(cx,H*0.30,60,cx,H*0.30,H*0.95);
+  bg.addColorStop(0,'#141b25');bg.addColorStop(.55,'#0a0e14');bg.addColorStop(1,'#05080b');
+  ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+  ctx.strokeStyle='rgba(251,191,36,.10)';ctx.lineWidth=2;ctx.strokeRect(36,36,W-72,H-72);
+
+  // wordmark
+  const wy=H*0.10;
+  ctx.textBaseline='middle';ctx.font="700 54px 'Saira Semi Condensed'";
+  const w1="WINGS",w2="IQ", tw=ctx.measureText(w1).width+ctx.measureText(w2).width;
+  ctx.textAlign='left';
+  ctx.fillStyle='#E8EDF2';ctx.fillText(w1,cx-tw/2,wy);
+  ctx.fillStyle='#FBBF24';ctx.fillText(w2,cx-tw/2+ctx.measureText(w1).width,wy);
+  ctx.textAlign='center';
+  let stackBottom=wy+H*0.03;
+
+  if(hasM){
+    const ey=stackBottom+H*0.035;
+    ctx.fillStyle='#FBBF24';ctx.font="600 24px 'Saira Semi Condensed'";
+    ctx.fillText("\u00B7  PERSONAL MILESTONE  \u00B7",cx,ey);
+    const by=ey+H*0.052, t=MS[state.milestone].toUpperCase();
+    ctx.font="700 44px 'Saira Semi Condensed'";
+    const pw=ctx.measureText(t).width+80, ph=78;
+    ctx.fillStyle=goldGrad(cx-pw/2,by-ph/2,cx+pw/2,by+ph/2);
+    roundRect(cx-pw/2,by-ph/2,pw,ph,39);ctx.fill();
+    ctx.fillStyle='#2a1e06';ctx.fillText(t,cx,by+2);
+    stackBottom=by+ph/2+H*0.012;
+  }
+
+  const tierY=H*0.835;
+  const regionTop=stackBottom+H*0.025, regionBot=tierY-H*0.07;
+  const cyE=(regionTop+regionBot)/2;
+  let R=Math.min((regionBot-regionTop)/2-26, Math.min(W,H)*0.30); R=Math.max(R,150);
+  drawEmblem(cx,cyE,R,s,frac);
+
+  const tier=tierFor(s).toUpperCase();
+  ctx.font="600 38px 'Saira Semi Condensed'";
+  const tpw=ctx.measureText(tier).width+64, tph=68;
+  ctx.fillStyle='rgba(251,191,36,.12)';roundRect(cx-tpw/2,tierY-tph/2,tpw,tph,34);ctx.fill();
+  ctx.strokeStyle=goldGrad(cx-tpw/2,tierY,cx+tpw/2,tierY);ctx.lineWidth=3;
+  roundRect(cx-tpw/2,tierY-tph/2,tpw,tph,34);ctx.stroke();
+  ctx.fillStyle='#FBE7A8';ctx.textBaseline='middle';ctx.fillText(tier,cx,tierY+1);
+
+  ctx.fillStyle='#FFFFFF';ctx.font="700 48px 'Saira Semi Condensed'";
+  ctx.fillText("What's your WingsIQ?",cx,H*0.905);
+  ctx.fillStyle='#FBBF24';ctx.font="600 36px 'Saira Semi Condensed'";
+  ctx.fillText("wingsiq.ai",cx,H*0.945);
+
+  document.getElementById('sVal').textContent=s;
+  document.getElementById('sTier').textContent=tierFor(s);
+  document.getElementById('capText').innerHTML='<b>Suggested caption</b><br>'+captionText();
+}
+
+document.getElementById('score').addEventListener('input',e=>{state.score=+e.target.value;render();});
+document.getElementById('milestone').addEventListener('change',e=>{state.milestone=e.target.value;render();});
+document.getElementById('fmt').addEventListener('click',e=>{
+  const b=e.target.closest('button');if(!b)return;
+  state.fmt=b.dataset.f;[...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));render();
+});
+document.getElementById('dl').addEventListener('click',()=>{
+  const a=document.createElement('a');
+  a.download=`wingsiq-${state.milestone!=='none'?state.milestone+'-':''}${state.score}.png`;
+  a.href=canvas.toDataURL('image/png');a.click();flash("Saved \u2014 post it and tag a pilot");
+});
+document.getElementById('cap').addEventListener('click',async()=>{
+  try{await navigator.clipboard.writeText(captionText());flash("Caption copied");}
+  catch(e){flash("Select the text below to copy");}
+});
+function flash(m){const h=document.getElementById('hint');h.textContent=m;h.style.color='var(--amber)';
+  setTimeout(()=>{h.textContent='';},2600);}
+
+const fonts=["700 54px 'Saira Semi Condensed'","700 200px 'Saira Semi Condensed'","600 38px 'Saira Semi Condensed'"];
+Promise.all(fonts.map(f=>document.fonts.load(f))).then(render).catch(render);
+document.fonts.ready.then(render);
+</script>
+</body>
+</html>

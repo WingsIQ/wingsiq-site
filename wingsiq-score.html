@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WingsIQ Score</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Saira+Semi+Condensed:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --panel:#0A0E14;
+    --bezel:#161B24;
+    --bezel-2:#1F2632;
+    --face:#0D1117;
+    --amber:#FBBF24;
+    --amber-deep:#D97706;
+    --green:#34D399;
+    --red:#EF4444;
+    --ink:#E8EDF2;
+    --muted:#6B7685;
+    --line:#262E3B;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:
+     radial-gradient(120% 80% at 50% -10%, #11161f 0%, var(--panel) 55%, #06090e 100%);
+     color:var(--ink);font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;min-height:100%}
+  body{padding:clamp(16px,3.5vw,40px);display:flex;justify-content:center}
+  .wrap{width:100%;max-width:860px}
+
+  /* header */
+  .top{display:flex;align-items:center;justify-content:space-between;margin-bottom:clamp(20px,3vw,32px)}
+  .brand{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;letter-spacing:.04em;font-size:20px;text-transform:uppercase}
+  .brand b{color:var(--amber)}
+  .streak{display:flex;align-items:center;gap:8px;font-family:'Saira Semi Condensed',sans-serif;font-weight:600;
+     font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+     border:1px solid var(--line);padding:7px 12px;border-radius:999px}
+  .streak .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 10px var(--amber)}
+  .streak b{color:var(--ink)}
+
+  /* score hero */
+  .hero{border:1px solid var(--line);border-radius:20px;
+     background:linear-gradient(180deg, rgba(31,38,50,.55), rgba(13,17,23,.4));
+     padding:clamp(22px,3vw,30px) clamp(20px,3vw,32px);margin-bottom:18px;
+     display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}
+  .eyebrow{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.22em;
+     text-transform:uppercase;font-size:12px;color:var(--muted);margin-bottom:6px}
+  .score{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-size:clamp(72px,15vw,120px);
+     line-height:.86;color:var(--amber);text-shadow:0 0 30px rgba(251,191,36,.35);font-variant-numeric:tabular-nums}
+  .score .of{font-size:.28em;color:var(--muted);text-shadow:none;letter-spacing:.04em}
+  .tier{margin-top:10px;display:inline-flex;align-items:center;gap:9px}
+  .tier .badge{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.04em;
+     font-size:15px;color:var(--ink)}
+  .tier .chip{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--amber);
+     border:1px solid rgba(251,191,36,.35);border-radius:6px;padding:3px 7px;font-weight:600}
+  .toNext{margin-top:14px;max-width:260px}
+  .toNext .lbl{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+     display:flex;justify-content:space-between;margin-bottom:6px}
+  .bar{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--amber-deep),var(--amber));
+     border-radius:99px;transition:width 1s cubic-bezier(.2,.7,.2,1)}
+
+  .share{justify-self:end;align-self:start}
+  .share button{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.04em;
+     font-size:13px;color:var(--panel);background:var(--amber);border:none;border-radius:10px;
+     padding:11px 16px;cursor:pointer;transition:transform .15s ease, box-shadow .15s ease;
+     box-shadow:0 6px 18px rgba(251,191,36,.25)}
+  .share button:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(251,191,36,.35)}
+  .share button:active{transform:translateY(0)}
+  .share .hint{margin-top:8px;font-size:11px;color:var(--muted);text-align:right;height:14px;transition:color .2s}
+
+  /* main grid */
+  .grid{display:grid;grid-template-columns:300px 1fr;gap:18px}
+  .card{border:1px solid var(--line);border-radius:20px;background:rgba(13,17,23,.55);padding:22px}
+  .card h2{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.16em;
+     text-transform:uppercase;font-size:12px;color:var(--muted);margin-bottom:16px}
+
+  /* gauge */
+  .gaugeCard{display:flex;flex-direction:column;align-items:center}
+  .gaugeWrap{position:relative;width:100%;max-width:268px}
+  svg{width:100%;height:auto;display:block}
+  #gauge text{font-family:'Saira Semi Condensed',sans-serif}
+  .skins{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;margin-bottom:14px;gap:2px}
+  .skin{font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.07em;text-transform:uppercase;
+     font-size:11px;color:var(--muted);background:transparent;border:none;border-radius:999px;padding:6px 16px;
+     cursor:pointer;transition:background .15s,color .15s}
+  .skin.on{background:var(--amber);color:var(--panel)}
+  .verdict{margin-top:6px;font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.04em;
+     font-size:15px;min-height:20px;text-align:center}
+
+  /* simulator */
+  .freq{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+  .freq .wave{display:flex;gap:3px;align-items:flex-end;height:16px}
+  .freq .wave span{width:3px;background:var(--amber);border-radius:2px;animation:eq 1s infinite ease-in-out}
+  .freq .wave span:nth-child(2){animation-delay:.15s}
+  .freq .wave span:nth-child(3){animation-delay:.3s}
+  .freq .wave span:nth-child(4){animation-delay:.45s}
+  @keyframes eq{0%,100%{height:5px}50%{height:16px}}
+  .freq .label{font-family:'Saira Semi Condensed',sans-serif;font-size:12px;letter-spacing:.1em;
+     text-transform:uppercase;color:var(--muted)}
+  .atc{background:var(--face);border:1px solid var(--line);border-left:3px solid var(--amber);
+     border-radius:10px;padding:14px 16px;font-family:'Saira Semi Condensed',sans-serif;font-weight:500;
+     font-size:18px;line-height:1.45;color:var(--ink);margin-bottom:8px}
+  .atc .from{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);
+     margin-bottom:6px;font-weight:600}
+  .prompt{font-size:13px;color:var(--muted);margin:14px 0 10px}
+  .opts{display:grid;gap:9px}
+  .opt{text-align:left;background:rgba(31,38,50,.4);border:1px solid var(--line);border-radius:10px;
+     padding:12px 14px;color:var(--ink);font-family:inherit;font-size:14px;cursor:pointer;
+     transition:border-color .15s,background .15s,transform .1s}
+  .opt:hover{border-color:var(--amber);background:rgba(251,191,36,.06)}
+  .opt:active{transform:scale(.995)}
+  .opt:disabled{opacity:.45;cursor:default}
+  .opt .tag{display:block;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+
+  .next{margin-top:14px;width:100%;background:transparent;border:1px solid var(--amber);color:var(--amber);
+     font-family:'Saira Semi Condensed',sans-serif;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+     font-size:13px;border-radius:10px;padding:12px;cursor:pointer;transition:background .15s,color .15s}
+  .next:hover{background:var(--amber);color:var(--panel)}
+
+  /* log */
+  .log{margin-top:18px}
+  .log .row{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px solid var(--line);font-size:13px}
+  .log .row:first-child{border-top:none}
+  .log .row .txt{color:var(--muted)}
+  .log .row .val{font-family:'Saira Semi Condensed',sans-serif;font-weight:700;font-variant-numeric:tabular-nums}
+
+  .foot{margin-top:22px;font-size:11px;color:var(--muted);line-height:1.6;text-align:center}
+
+  @media (max-width:720px){
+    .hero{grid-template-columns:1fr}
+    .share{justify-self:start;align-self:auto}
+    .share .hint{text-align:left}
+    .grid{grid-template-columns:1fr}
+    .gaugeWrap{max-width:300px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none!important;transition:none!important}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">Wings<b>IQ</b></div>
+    <div class="streak"><span class="dot"></span><b id="streakN">12</b>&nbsp;day streak</div>
+  </div>
+
+  <!-- LIFETIME SCORE -->
+  <section class="hero">
+    <div>
+      <div class="eyebrow">Your WingsIQ Score</div>
+      <div class="score"><span id="lifeScore">72</span><span class="of">/100</span></div>
+      <div class="tier">
+        <span class="badge" id="tierName">Cross-Country</span>
+        <span class="chip" id="tierChip">Tier 3</span>
+      </div>
+      <div class="toNext">
+        <div class="lbl"><span id="nextName">Instrument Track</span><span id="nextGap">3 pts</span></div>
+        <div class="bar"><i id="nextBar" style="width:53%"></i></div>
+      </div>
+    </div>
+    <div class="share">
+      <button id="shareBtn">What's your WingsIQ?</button>
+      <div class="hint" id="shareHint">Tap to copy your score</div>
+    </div>
+  </section>
+
+  <div class="grid">
+
+    <!-- READBACK GAUGE -->
+    <div class="card gaugeCard">
+      <h2>Last Readback</h2>
+      <div class="skins">
+        <button class="skin on" data-mode="glass">Glass</button>
+        <button class="skin" data-mode="analog">Analog</button>
+      </div>
+      <div class="gaugeWrap">
+        <svg id="gauge" viewBox="0 0 240 240" aria-label="Readback accuracy gauge"></svg>
+      </div>
+      <div class="verdict" id="verdict">Make a call to begin</div>
+    </div>
+
+    <!-- ATC SIMULATOR -->
+    <div class="card">
+      <h2>ATC Readback Trainer</h2>
+      <div class="freq">
+        <div class="wave"><span></span><span></span><span></span><span></span></div>
+        <div class="label" id="freqLabel">Tuned · Tower 118.30</div>
+      </div>
+      <div class="atc">
+        <span class="from" id="atcFrom">Tower</span>
+        <span id="atcText">Cessna 12345, turn left heading 270, descend and maintain 3,000, contact Approach 124.7.</span>
+      </div>
+      <div class="prompt">Read it back. Which version is yours?</div>
+      <div class="opts" id="opts"></div>
+      <button class="next" id="nextBtn" style="display:none">Next call ›</button>
+
+      <div class="log">
+        <h2 style="margin-bottom:10px">Feeding your score</h2>
+        <div id="logRows"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="foot">
+    Training and educational use only. Not a substitute for a CFI, FAA testing, or actual flight.<br>
+    Prototype · WingsIQ Score v1 — readback accuracy is the seed input.
+  </div>
+</div>
+
+<script>
+/* ---------- Scoring engine (the single source of truth) ----------
+   v1 seed = readback accuracy. Each ATC instruction is a set of
+   required elements, weighted by how safety-critical they are.
+   A readback is scored on how many weighted elements it nails.
+   Lifetime WingsIQ Score = recency-weighted average of sessions.    */
+
+const CALLS = [
+  {
+    from:"Tower", freq:"Tower 118.30",
+    text:"Cessna 12345, turn left heading 270, descend and maintain 3,000, contact Approach 124.7.",
+    elements:[
+      {k:"callsign", w:1, label:"Callsign 12345"},
+      {k:"heading",  w:2, label:"Heading 270"},
+      {k:"altitude", w:2, label:"Altitude 3,000"},
+      {k:"freq",     w:1, label:"Approach 124.7"},
+    ],
+    options:[
+      {tag:"Full readback", got:["callsign","heading","altitude","freq"],
+       say:"Left heading 270, down to 3,000, Approach 124.7, Cessna 12345."},
+      {tag:"Dropped a detail", got:["heading","altitude","callsign"],
+       say:"Left 270, descend 3,000, Cessna 345."},
+      {tag:"Rushed it", got:["heading","callsign"],
+       say:"Heading 270, 12345."},
+    ]
+  },
+  {
+    from:"Ground", freq:"Ground 121.90",
+    text:"Skyhawk 8GP, taxi to runway 22 via Alpha, hold short of runway 15.",
+    elements:[
+      {k:"callsign", w:1, label:"Callsign 8GP"},
+      {k:"runway",   w:2, label:"Runway 22"},
+      {k:"taxi",     w:1, label:"Via Alpha"},
+      {k:"holdshort",w:3, label:"Hold short 15"},
+    ],
+    options:[
+      {tag:"Full readback", got:["callsign","runway","taxi","holdshort"],
+       say:"Taxi runway 22 via Alpha, hold short runway 15, Skyhawk 8GP."},
+      {tag:"Missed hold-short", got:["callsign","runway","taxi"],
+       say:"Runway 22 via Alpha, Skyhawk 8GP."},
+      {tag:"Bare minimum", got:["runway"],
+       say:"Roger, 22."},
+    ]
+  },
+  {
+    from:"Approach", freq:"Approach 124.70",
+    text:"Bonanza 7TR, squawk 4271, ident, expect ILS runway 9, maintain 4,000 until established.",
+    elements:[
+      {k:"callsign", w:1, label:"Callsign 7TR"},
+      {k:"squawk",   w:2, label:"Squawk 4271"},
+      {k:"approach", w:1, label:"ILS runway 9"},
+      {k:"altitude", w:3, label:"4,000 til established"},
+    ],
+    options:[
+      {tag:"Full readback", got:["callsign","squawk","approach","altitude"],
+       say:"Squawk 4271, ident, ILS 9, 4,000 until established, Bonanza 7TR."},
+      {tag:"Lost the altitude", got:["callsign","squawk","approach"],
+       say:"4271 ident, expecting ILS 9, 7TR."},
+      {tag:"Squawk only", got:["squawk"],
+       say:"4271."},
+    ]
+  }
+];
+
+function scoreReadback(call, got){
+  const total = call.elements.reduce((s,e)=>s+e.w,0);
+  const hit   = call.elements.filter(e=>got.includes(e.k)).reduce((s,e)=>s+e.w,0);
+  return Math.round((hit/total)*100);
+}
+function missed(call, got){
+  return call.elements.filter(e=>!got.includes(e.k));
+}
+function verdictFor(s){
+  if(s>=90) return ["Clean readback. ATC's happy.", "var(--green)"];
+  if(s>=75) return ["Solid — tighten the details.", "var(--amber)"];
+  if(s>=50) return ["You dropped safety-critical items.", "var(--amber-deep)"];
+  return ["ATC would ask you to say again.", "var(--red)"];
+}
+
+/* tiers */
+const TIERS=[
+  {min:0, name:"Pre-Solo", chip:"Tier 1"},
+  {min:50,name:"Solo Ready", chip:"Tier 2"},
+  {min:65,name:"Cross-Country", chip:"Tier 3"},
+  {min:75,name:"Instrument Track", chip:"Tier 4"},
+  {min:85,name:"Checkride Ready", chip:"Tier 5"},
+  {min:93,name:"Captain", chip:"Tier 6"},
+];
+function tierFor(s){let t=TIERS[0];for(const x of TIERS)if(s>=x.min)t=x;return t;}
+function nextTier(s){for(const x of TIERS)if(s<x.min)return x;return null;}
+
+/* ---------- State ---------- */
+let lifetime = 72;          // seeded from prior sessions
+let sessions = 8;           // how many readbacks already feed it
+let callIdx = 0;
+let answered = false;
+
+/* ---------- Gauge (airspeed-indicator style, 0–100 clockwise) ---------- */
+const NS="http://www.w3.org/2000/svg";
+const CX=120, CY=120;
+const A0=30, A1=330;                         // 300deg sweep, gap at TOP — 0 at top-right, 100 at top-left, clockwise (0deg = up)
+const val2ang = v => A0 + (v/100)*(A1-A0);
+function pol(r,deg){const a=(deg-90)*Math.PI/180;return [CX+r*Math.cos(a),CY+r*Math.sin(a)];}
+function arc(rad,d0,d1){
+  const [x0,y0]=pol(rad,d0),[x1,y1]=pol(rad,d1);
+  const large=(d1-d0)>180?1:0;
+  return `M${x0.toFixed(2)} ${y0.toFixed(2)} A${rad} ${rad} 0 ${large} 1 ${x1.toFixed(2)} ${y1.toFixed(2)}`;
+}
+const gauge=document.getElementById('gauge');
+function buildInstrument(){
+  // arc colors follow the airspeed-indicator convention (see arc paths below)
+  let s=`<defs>
+    <radialGradient id="bezelMetal" cx="50%" cy="34%" r="66%">
+      <stop offset="0%" stop-color="#3d424a"/><stop offset="55%" stop-color="#22262c"/><stop offset="100%" stop-color="#0a0c10"/>
+    </radialGradient>
+    <radialGradient id="faceShade" cx="50%" cy="42%" r="72%">
+      <stop offset="0%" stop-color="#16191e"/><stop offset="70%" stop-color="#0a0c0f"/><stop offset="100%" stop-color="#000"/>
+    </radialGradient>
+    <radialGradient id="screw" cx="40%" cy="34%" r="70%">
+      <stop offset="0%" stop-color="#4c515a"/><stop offset="100%" stop-color="#111318"/>
+    </radialGradient>
+    <radialGradient id="glass" cx="33%" cy="25%" r="60%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.15"/><stop offset="55%" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1d1f23"/><stop offset="100%" stop-color="#070809"/>
+    </linearGradient>
+    <filter id="ns" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-color="#000" flood-opacity="0.65"/>
+    </filter>
+  </defs>`;
+  // case + corner screws
+  s+=`<rect x="6" y="6" width="228" height="228" rx="16" fill="url(#plate)" stroke="#000" stroke-width="1.5"/>`;
+  [[28,28],[212,28],[28,212],[212,212]].forEach(([x,y])=>{
+    s+=`<circle cx="${x}" cy="${y}" r="7" fill="url(#screw)" stroke="#000" stroke-width="1"/>
+        <line x1="${x-3.4}" y1="${y}" x2="${x+3.4}" y2="${y}" stroke="#0a0b0d" stroke-width="1.4"/>`;
+  });
+  // bezel ring, inner lip, dial face
+  s+=`<circle cx="120" cy="120" r="105" fill="none" stroke="url(#bezelMetal)" stroke-width="16"/>`;
+  s+=`<circle cx="120" cy="120" r="96" fill="none" stroke="#000" stroke-width="2.5"/>`;
+  s+=`<circle cx="120" cy="120" r="93" fill="url(#faceShade)"/>`;
+  // arc bands in true airspeed-indicator order (drawn first so the white ticks cross over them):
+  // inner white flap-range arc, then green normal → yellow caution → red never-exceed up high.
+  // It's a percentage, so "high is good" still reads plainly off the needle and digital window.
+  s+=`<path d="${arc(73,val2ang(0),val2ang(38))}"  fill="none" stroke="#e9edf2" stroke-width="3.5"/>`;
+  s+=`<path d="${arc(80,val2ang(15),val2ang(80))}" fill="none" stroke="#2fae6a" stroke-width="7"/>`;
+  s+=`<path d="${arc(80,val2ang(80),val2ang(93))}" fill="none" stroke="#dca52c" stroke-width="7"/>`;
+  s+=`<path d="${arc(80,val2ang(93),val2ang(100))}" fill="none" stroke="#cf3a3a" stroke-width="7"/>`;
+  // ticks + numbers — bold, white
+  for(let v=0;v<=100;v+=2){
+    const ang=val2ang(v), major=v%10===0;
+    const [x0,y0]=pol(86,ang),[x1,y1]=pol(major?70:79,ang);
+    s+=`<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#fff" stroke-width="${major?3:1.4}"/>`;
+    if(major){const [nx,ny]=pol(52,ang);
+      s+=`<text x="${nx.toFixed(1)}" y="${ny.toFixed(1)}" fill="#fff" font-size="14" font-weight="700" text-anchor="middle" dominant-baseline="central">${v}</text>`;}
+  }
+  // center placard
+  s+=`<text x="120" y="106" fill="#eef1f5" font-size="13" font-weight="700" letter-spacing="2.5" text-anchor="middle">WINGSIQ</text>`;
+  s+=`<text x="120" y="140" fill="#9aa3ad" font-size="11" font-weight="600" letter-spacing="3" text-anchor="middle">SCORE</text>`;
+  // digital readout window — tucked into the top gap, between the 0 and 100, never crossed by the needle
+  s+=`<rect x="100" y="50" width="40" height="20" rx="4" fill="#050608" fill-opacity="0.65" stroke="#2a2f37" stroke-width="1"/>`;
+  s+=`<text id="gaugeN" x="120" y="60" fill="#fff" font-size="15" font-weight="700" text-anchor="middle" dominant-baseline="central">—</text>`;
+  // white needle
+  s+=`<g id="needle" filter="url(#ns)">
+        <polygon points="120,50 117.2,118 122.8,118" fill="#f3f5f8"/>
+        <polygon points="116.5,123 123.5,123 120,139" fill="#c9ced5"/>
+        <circle cx="120" cy="120" r="8.5" fill="#1a1d23" stroke="#3a3f47" stroke-width="1.5"/>
+        <circle cx="120" cy="120" r="4.5" fill="#eef1f5"/>
+      </g>`;
+  // glass glare
+  s+=`<circle cx="120" cy="120" r="93" fill="url(#glass)" style="pointer-events:none"/>`;
+  gauge.innerHTML=s;
+}
+/* ---------- Glass cockpit skin (G1000-era PFD language, not Garmin's exact chrome) ---------- */
+function buildGlass(){
+  let s=`<defs>
+    <radialGradient id="gScreen" cx="50%" cy="40%" r="78%">
+      <stop offset="0%" stop-color="#0c141c"/><stop offset="100%" stop-color="#03070b"/>
+    </radialGradient>
+    <filter id="cyGlow" x="-60%" y="-60%" width="220%" height="220%">
+      <feDropShadow dx="0" dy="0" stdDeviation="2.6" flood-color="#22d3ee" flood-opacity="0.9"/>
+    </filter>
+  </defs>`;
+  // bezel-less screen
+  s+=`<rect x="10" y="10" width="220" height="220" rx="14" fill="url(#gScreen)" stroke="#1d2530" stroke-width="1.5"/>`;
+  // faint full track, then the proficiency bands (same positions as the analog dial → identical meaning)
+  s+=`<path d="${arc(86,val2ang(0),val2ang(100))}" fill="none" stroke="#19202b" stroke-width="9" stroke-linecap="round"/>`;
+  s+=`<path d="${arc(86,val2ang(15),val2ang(80))}" fill="none" stroke="#2fae6a" stroke-width="9"/>`;
+  s+=`<path d="${arc(86,val2ang(80),val2ang(93))}" fill="none" stroke="#e0b53a" stroke-width="9"/>`;
+  s+=`<path d="${arc(86,val2ang(93),val2ang(100))}" fill="none" stroke="#e0533a" stroke-width="9"/>`;
+  // decluttered labels at 0/25/50/75/100
+  [0,25,50,75,100].forEach(v=>{
+    const ang=val2ang(v),[x0,y0]=pol(80,ang),[x1,y1]=pol(72,ang),[lx,ly]=pol(62,ang);
+    s+=`<line x1="${x0.toFixed(1)}" y1="${y0.toFixed(1)}" x2="${x1.toFixed(1)}" y2="${y1.toFixed(1)}" stroke="#9fb0c0" stroke-width="2"/>`;
+    s+=`<text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" fill="#9fb0c0" font-size="11" font-weight="600" text-anchor="middle" dominant-baseline="central">${v}</text>`;
+  });
+  // big digital readout (the hero of a glass panel)
+  s+=`<text id="gaugeN" x="120" y="116" fill="#e9f6fb" font-size="46" font-weight="700" text-anchor="middle" dominant-baseline="central">—</text>`;
+  s+=`<text x="120" y="148" fill="#22d3ee" font-size="11" font-weight="700" letter-spacing="2.5" text-anchor="middle">WINGSIQ SCORE</text>`;
+  s+=`<text x="120" y="162" fill="#5b6b7b" font-size="9" font-weight="600" letter-spacing="2" text-anchor="middle">% READBACK</text>`;
+  // cyan bug riding the arc (points inward; rotated to value) — leaves the center clear
+  s+=`<g id="needle" filter="url(#cyGlow)">
+        <polygon points="120,47 113,33 127,33" fill="#22d3ee"/>
+      </g>`;
+  gauge.innerHTML=s;
+}
+
+/* ---------- Mode + render ---------- */
+let mode='glass', curVal=0, hasReading=false;
+function drawNeedle(angle){ const n=document.getElementById('needle'); if(n) n.setAttribute('transform',`rotate(${angle} 120 120)`); }
+function renderInstrument(){
+  (mode==='glass'?buildGlass:buildInstrument)();
+  drawNeedle(val2ang(curVal));
+  const n=document.getElementById('gaugeN'); if(n) n.textContent = hasReading ? Math.round(curVal) : '—';
+}
+document.querySelectorAll('.skin').forEach(b=>{
+  b.onclick=()=>{ mode=b.dataset.mode;
+    document.querySelectorAll('.skin').forEach(x=>x.classList.toggle('on', x===b));
+    renderInstrument(); };
+});
+
+const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+let raf=null;
+function animateGauge(to){
+  cancelAnimationFrame(raf);
+  hasReading=true;
+  const nEl=document.getElementById('gaugeN');
+  if(reduce){curVal=to;drawNeedle(val2ang(to));nEl.textContent=to;return;}
+  const from=0, start=performance.now(), dur=1100;
+  const overshoot=Math.min(to+6,100);
+  function frame(t){
+    let p=Math.min((t-start)/dur,1);
+    // ease-out then settle past target and back (galvanometer feel)
+    let v;
+    if(p<.75){const e=1-Math.pow(1-(p/.75),2.2);v=from+(overshoot-from)*e;}
+    else{const e=(p-.75)/.25;v=overshoot+(to-overshoot)*e;}
+    curVal=v;
+    drawNeedle(val2ang(v));
+    nEl.textContent=Math.round(v);
+    if(p<1)raf=requestAnimationFrame(frame); else {curVal=to;drawNeedle(val2ang(to));nEl.textContent=to;}
+  }
+  raf=requestAnimationFrame(frame);
+}
+
+/* ---------- Lifetime score animation ---------- */
+function rollNumber(el,from,to,dur=900){
+  if(reduce){el.textContent=to;return;}
+  const start=performance.now();
+  (function step(t){const p=Math.min((t-start)/dur,1);
+    el.textContent=Math.round(from+(to-from)*(1-Math.pow(1-p,3)));
+    if(p<1)requestAnimationFrame(step);})(performance.now());
+}
+function renderLifetime(prev){
+  const el=document.getElementById('lifeScore');
+  rollNumber(el, prev??lifetime, lifetime);
+  const t=tierFor(lifetime), nx=nextTier(lifetime);
+  document.getElementById('tierName').textContent=t.name;
+  document.getElementById('tierChip').textContent=t.chip;
+  if(nx){
+    const span=nx.min - t.min;
+    const into=lifetime - t.min;
+    document.getElementById('nextName').textContent=nx.name;
+    document.getElementById('nextGap').textContent=(nx.min-lifetime)+" pts";
+    document.getElementById('nextBar').style.width=Math.max(6,Math.round(into/span*100))+"%";
+  }else{
+    document.getElementById('nextName').textContent="Top tier reached";
+    document.getElementById('nextGap').textContent="✓";
+    document.getElementById('nextBar').style.width="100%";
+  }
+}
+
+/* ---------- Render a call ---------- */
+function renderCall(){
+  answered=false;
+  const c=CALLS[callIdx];
+  document.getElementById('atcFrom').textContent=c.from;
+  document.getElementById('atcText').textContent=c.text;
+  document.getElementById('freqLabel').textContent="Tuned · "+c.freq;
+  document.getElementById('nextBtn').style.display='none';
+  const opts=document.getElementById('opts');
+  opts.innerHTML='';
+  c.options.forEach((o,i)=>{
+    const b=document.createElement('button');
+    b.className='opt';
+    b.innerHTML=`<span class="tag">${o.tag}</span>“${o.say}”`;
+    b.onclick=()=>answer(c,o,opts);
+    opts.appendChild(b);
+  });
+}
+
+/* ---------- Handle answer ---------- */
+function logRow(call,score){
+  const rows=document.getElementById('logRows');
+  const r=document.createElement('div');
+  r.className='row';
+  const col=score>=90?'var(--green)':score>=75?'var(--amber)':score>=50?'var(--amber-deep)':'var(--red)';
+  r.innerHTML=`<span class="txt">${call.from} · readback</span><span class="val" style="color:${col}">${score}</span>`;
+  rows.insertBefore(r,rows.firstChild);
+  while(rows.children.length>5)rows.removeChild(rows.lastChild);
+}
+function answer(call,opt,opts){
+  if(answered)return; answered=true;
+  [...opts.children].forEach(b=>b.disabled=true);
+  const s=scoreReadback(call,opt.got);
+  animateGauge(s);
+  const [vTxt,vCol]=verdictFor(s);
+  const miss=missed(call,opt.got);
+  const v=document.getElementById('verdict');
+  v.style.color=vCol;
+  v.textContent = miss.length ? `Missed: ${miss.map(m=>m.label).join(', ')}` : vTxt;
+  logRow(call,s);
+
+  // update lifetime: recency-weighted average (recent calls move it more)
+  const prev=lifetime;
+  sessions++;
+  lifetime = Math.round(lifetime*0.82 + s*0.18);
+  setTimeout(()=>renderLifetime(prev),350);
+
+  document.getElementById('nextBtn').style.display='block';
+}
+
+document.getElementById('nextBtn').onclick=()=>{
+  callIdx=(callIdx+1)%CALLS.length;
+  renderCall();
+};
+
+/* ---------- Share (the viral loop, made tangible) ---------- */
+document.getElementById('shareBtn').onclick=async()=>{
+  const t=tierFor(lifetime);
+  const line=`My WingsIQ is ${lifetime}/100 — ${t.name}. What's yours? wingsiq.ai`;
+  const hint=document.getElementById('shareHint');
+  try{await navigator.clipboard.writeText(line);hint.textContent="Copied — go flex it";hint.style.color="var(--amber)";}
+  catch(e){hint.textContent=line;hint.style.color="var(--amber)";}
+  setTimeout(()=>{hint.textContent="Tap to copy your score";hint.style.color="var(--muted)";},2600);
+};
+
+/* boot */
+renderInstrument();
+renderLifetime();
+renderCall();
+</script>
+</body>
+</html>
