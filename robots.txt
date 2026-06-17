@@ -1,1 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.wingsiq.ai/sitemap.xml
 
