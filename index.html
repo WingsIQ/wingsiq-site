@@ -62,9 +62,11 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .section-label { font-family: var(--mono); font-size: 12px; color: #FBBF24; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; }
 .section-title { font-size: clamp(32px, 4vw, 52px); font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; margin-bottom: 16px; }
 .section-sub { font-size: 17px; color: var(--dim); max-width: 520px; line-height: 1.7; margin-bottom: 56px; }
-.atc-window { background: var(--card); border: 1px solid var(--border-bright); border-radius: 20px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
-.atc-cta-window { display: block; text-decoration: none; cursor: pointer; transition: all 0.3s ease; max-width: 820px; margin: 0 auto; border: 12px solid #FBBF24; border-radius: 26px; box-shadow: 0 0 0 1.5px #4a3608, 0 0 32px rgba(251,191,36,0.32), 0 40px 100px rgba(0,0,0,0.5); }
-.atc-cta-window:hover { border-color: #FBBF24; transform: translateY(-4px); box-shadow: 0 0 0 1.5px #4a3608, 0 0 48px rgba(251,191,36,0.5), 0 50px 120px rgba(0,0,0,0.6); }
+.atc-window { background: var(--card); border: 1px solid var(--border-bright); border-radius: 14px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.5); }
+.atc-cta-window { display: block; text-decoration: none; cursor: pointer; transition: transform .2s cubic-bezier(.2,.7,.2,1), box-shadow .2s ease; max-width: 820px; margin: 0 auto; border: none; padding: 12px; border-radius: 26px;
+  background: linear-gradient(135deg,#FCEFB0 0%,#E3B73E 19%,#B98A1E 37%,#F6DB7B 52%,#C99A24 69%,#97701A 87%,#6E4F10 100%);
+  box-shadow: inset 0 2px 1px rgba(255,255,255,.9), inset 0 -3px 4px rgba(60,40,6,.85), inset 3px 0 4px rgba(255,255,255,.20), inset -3px 0 5px rgba(60,40,6,.45), 0 0 0 1.5px #4a3608, 0 8px 0 #5c4310, 0 9px 2px rgba(0,0,0,.5), 0 24px 36px rgba(0,0,0,.72); }
+.atc-cta-window:hover { transform: translateY(-6px); box-shadow: inset 0 2px 1px rgba(255,255,255,.9), inset 0 -3px 4px rgba(60,40,6,.85), inset 3px 0 4px rgba(255,255,255,.20), inset -3px 0 5px rgba(60,40,6,.45), 0 0 0 1.5px #4a3608, 0 8px 0 #5c4310, 0 12px 4px rgba(0,0,0,.5), 0 36px 54px rgba(0,0,0,.78), 0 0 30px rgba(251,191,36,.34); }
 .try-banner { background: var(--accent); color: #fff; font-family: var(--mono); font-weight: 500; letter-spacing: 1px; text-align: center; padding: 13px; font-size: 14px; }
 .atc-cta-window:hover .try-banner { background: var(--accent-bright); }
 .atc-screenshot { width: 100%; display: block; }
