@@ -2,6 +2,15 @@
 
 Notable hosting, domain, and SEO decisions for `wingsiq-site`. Read this at session start alongside `CLAUDE.md` — it carries the "why" behind config that isn't obvious from the code.
 
+## 2026-10-18 — SEO: removed leftover www references (host drift)
+
+- **Found:** GSC showed 9/14 pages unindexed. The July 27 domain setup is still correct live (`www` → 308 → apex; every sitemap URL returns 200 directly), but two files still pointed at `www`:
+  - `index.html`: `og:url`, `og:image`, `twitter:image` were on `https://www.wingsiq.ai/` while its canonical was the apex.
+  - `robots.txt`: `Sitemap:` line pointed at `https://www.wingsiq.ai/sitemap.xml`, so every crawl started with a redirect.
+- **Fix:** all three tags and the robots `Sitemap:` line now use `https://wingsiq.ai/`. Homepage `lastmod` bumped. No served file references `www` anymore.
+- **Not changed:** Vercel Domains (already correct), `vercel.json`, sitemap URL list (no entry redirects).
+- **Old `index (1/2/3).html` files:** deleted 2026-06-15, return 404 live, referenced nowhere. Not a current factor.
+
 ## 2026-07-27 — SEO: fixed "Duplicate without user-selected canonical" (wingsiq.ai)
 
 - **Root cause:** Vercel had `www.wingsiq.ai` set as Production with the apex
