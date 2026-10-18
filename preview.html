@@ -43,6 +43,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; padding: 20px 48
 .hero-title .line1 { display: block; color: var(--white); }
 .hero-title .line2 { display: block; color: var(--accent); }
 .hero-sub { font-size: clamp(16px, 2vw, 20px); color: var(--dim); max-width: 560px; margin: 0 auto 48px; line-height: 1.7; animation: fadeUp 0.8s ease 0.3s both; }
+.hero-offer { flex-basis: 100%; margin: 0; font-size: 15px; color: var(--dim); }
 .hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; animation: fadeUp 0.8s ease 0.45s both; margin-bottom: 64px; }
 .btn-primary { background: var(--accent); color: #fff; padding: 16px 36px; border-radius: 10px; text-decoration: none; font-size: 16px; font-weight: 700; transition: all 0.2s; border: none; cursor: pointer; }
 .btn-primary:hover { background: var(--accent-bright); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(59,123,247,0.35); }
@@ -193,7 +194,8 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
   </h1>
   <p class="hero-sub">The first flight training platform that actually talks back. Practice ATC radio calls with AI, ace your checkride, and track your WingsIQ score — 24/7, from anywhere.</p>
   <div class="hero-actions">
-    <a href="https://app.wingsiq.ai/login" class="btn-primary big btn-takeoff">CLEARED FOR TAKE OFF — TRY THE ATC SIMULATOR — START FREE TRIAL</a>
+    <a href="https://app.wingsiq.ai/login" class="btn-primary big btn-takeoff">CLEARED FOR TAKE OFF — TRY THE ATC SIMULATOR</a>
+    <p class="hero-offer">Try the ATC simulator free for 5 days, then $24/month.</p>
   </div>
   <div class="hero-stats">
     <div class="stat-item"><div class="stat-num">359K</div><div class="stat-label">Student Pilots in the US</div></div>
@@ -209,7 +211,7 @@ footer { border-top: 1px solid var(--border); padding: 48px; display: flex; alig
   <h2 class="section-title">Talk to the Tower.<br>Right now.</h2>
   <p class="section-sub">WingsIQ puts a real AI controller in your headset. Practice any airport, any time. Get instant feedback on every readback.</p>
   <a href="https://app.wingsiq.ai/login" class="atc-window atc-cta-window">
-    <div class="try-banner">▶ TRY IT FREE TODAY — no credit card, no download</div>
+    <div class="try-banner">▶ Try the ATC simulator free for 5 days, then $24/month. No credit card, no download.</div>
     <img class="atc-screenshot" src="simulator.png" alt="WingsIQ live ATC simulator — IFR clearance at KPHX">
   </a>
 </section>
@@ -401,6 +403,23 @@ async function handleSubmit(e) {
     const i=tiles.indexOf(e.target);setTimeout(()=>e.target.classList.add('in'),i*70);io.unobserve(e.target);}}),{threshold:.2});
     tiles.forEach(t=>io.observe(t));}
 })();
+</script>
+<script>
+  // Carry utm_* from the landing URL onto links into the app, so campaign
+  // attribution survives the wingsiq.ai -> app.wingsiq.ai hop. Existing
+  // params on a link are never overwritten.
+  (function () {
+    var utm = [];
+    new URLSearchParams(location.search).forEach(function (v, k) {
+      if (k.indexOf('utm_') === 0) utm.push([k, v]);
+    });
+    if (!utm.length) return;
+    document.querySelectorAll('a[href^="https://app.wingsiq.ai"]').forEach(function (a) {
+      var u = new URL(a.href);
+      utm.forEach(function (p) { if (!u.searchParams.has(p[0])) u.searchParams.set(p[0], p[1]); });
+      a.href = u.toString();
+    });
+  })();
 </script>
 </body>
 </html>
